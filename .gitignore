@@ -1,0 +1,12 @@
+# Exclude sensitive files
+*.key
+*.gpg
+*.pem
+*.private
+config_backup/
+*.log
+.env
+
+# Exclude system files
+.DS_Store
+Thumbs.db
