@@ -96,11 +96,134 @@ gpg --output lab-secret.txt --decrypt lab-secret.txt.gpg
 
 ---
 
-### Part 2: SSH Configuration - IN PROGRESS
+### Part 2: SSH Configuration - COMPLETED
 
-Coming next: Configuring secure SSH access between client and server
+**Date Completed:** October 1, 2025
+
+#### Objectives
+- Install and configure OpenSSH server
+- Generate SSH key pairs for passwordless authentication
+- Configure secure SSH settings
+- Disable password-based authentication
+- Implement SSH banner for security warnings
+
+#### What I Learned
+- **SSH (Secure Shell)** provides encrypted remote access to servers
+- **Key-based authentication** is more secure than password authentication
+- SSH uses the same public/private key cryptography principles as GPG (Part 1)
+- **Public key** is stored on the server in `~/.ssh/authorized_keys`
+- **Private key** remains on the client and should never be shared
+- SSH configuration hardening includes disabling root login and password authentication
+
+#### Commands Used
+
+**Server Configuration:**
+```bash
+# Install OpenSSH server
+sudo dnf install -y openssh-server
+
+# Enable and start SSH service
+sudo systemctl enable sshd
+sudo systemctl start sshd
+
+# Verify service status
+systemctl status sshd
+
+# Check SSH service is listening
+sudo ss -tulpn | grep sshd
+
+# Configure firewall
+sudo firewall-cmd --permanent --add-service=ssh
+sudo firewall-cmd --reload
+
+# Get server IP address
+hostname -I
+```
+**Client Configuration:**
+```bash
+# Generate SSH key pair (2048-bit RSA)
+ssh-keygen -t rsa -b 2048 -C "your_email@example.com"
+
+# Verify keys were created
+ls -la ~/.ssh/
+
+# Copy public key to server
+ssh-copy-id username@server_ip
+
+# Test SSH connection
+ssh username@server_ip
+```
+
+**Security Hardening:**
+```bash
+# Backup SSH configuration
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
+
+# Edit SSH configuration
+sudo nano /etc/ssh/sshd_config
+
+# Modified settings:
+# PermitRootLogin no
+# PasswordAuthentication no
+# Banner /etc/issue.net
+
+# Restart SSH to apply changes
+sudo systemctl restart sshd
+
+# Verify configuration is valid
+sudo sshd -t
+```
+
+#### Key Takeaways
+- SSH key authentication eliminates password-based attacks
+- Private keys should be protected with a strong passphrase
+- Disabling root login prevents direct root access attempts
+- Disabling password authentication forces key-based authentication only
+- SSH banners provide legal warnings to potential unauthorized users
+- The same encryption principles from Part 1 secure SSH connections
+
+#### Challenges Faced
+- Initial configuration had banner pointing to `/etc/issue.net` instead of custom file
+- **Solution:** Used existing banner file location and customized the message
+- **Learning:** Different Linux distributions may have different default SSH configurations
+
+#### Security Improvements Implemented
+- Root login disabled
+- Password authentication disabled (key-based only)
+- Custom security banner configured
+- Firewall configured to allow SSH on port 22
+- SSH keys protected with passphrase
+
+#### Screenshots
+
+![SSH Service Running](screenshots/part2/01-ssh-service-running.jpg)
+*SSH service successfully installed and running on openEuler server*
+
+![Firewall SSH Allowed](screenshots/part2/02-firewall-ssh-allowed.jpg)
+*Firewall configured to allow SSH connections*
+
+![SSH Keys Generated](screenshots/part2/03-ssh-keys-generated.jpg)
+*SSH key pair generated on client with 2048-bit RSA encryption*
+
+![Key Copied to Server](screenshots/part2/04-key-copied-to-server.jpg)
+*Public key successfully copied to server's authorized_keys*
+
+![SSH Connection Success](screenshots/part2/05-ssh-connection-success.jpg)
+*Successful SSH connection using key-based authentication*
+
+![SSH Config Secured](screenshots/part2/06-ssh-config-secured.jpg)
+*SSH configuration hardened with disabled root login and password authentication*
+
+![SSH Banner and Connection](screenshots/part2/07-ssh-banner-and-connection.jpg)
+*Custom security banner displays on connection with system information*
+
+![Password Auth Disabled](screenshots/part2/08-password-auth-disabled.jpg)
+*Password authentication properly disabled, only key-based auth allowed*
 
 ---
+
+
+
 
 ### Part 3: MySQL Database Setup - PENDING
 
@@ -116,7 +239,7 @@ Coming next: Configuring secure SSH access between client and server
 
 ## Progress Tracker
 - [x] Part 1: Encryption Basics
-- [ ] Part 2: SSH Configuration
+- [x] Part 2: SSH Configuration
 - [ ] Part 3: MySQL Setup
 - [ ] Part 4: Flask & PHP Integration
 - [ ] Part 5: HTTPS Configuration
@@ -156,5 +279,5 @@ This project is for educational purposes as part of the EIOSY2A course.
 
 ---
 
-**Last Updated:** October 1, 2025  
-**Status:** Part 1 Complete  | Part 2 In Progress 
+**Last Updated:** October 2, 2025  
+**Status:** Parts 1-2 Complete | Part 3 In Progress
