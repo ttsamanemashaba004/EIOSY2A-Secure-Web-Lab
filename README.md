@@ -1,15 +1,15 @@
 # EIOSY2A LAB - Secure Web Application Deployment
 
-## 👨‍💻 Project Overview
+## Project Overview
 This project demonstrates the complete configuration and deployment of a secure web application on openEuler Linux, covering encryption, secure communication, database management, and HTTPS implementation.
 
-## 🛠️ Lab Environment
+## Lab Environment
 - **Server VM:** openEuler Linux
 - **Client VM:** openSUSE
 - **Network:** Local network / VirtualBox bridged network
 - **Virtualization:** VirtualBox
 
-## 🎯 Technologies & Tools
+## Technologies & Tools
 - GPG (GNU Privacy Guard)
 - OpenSSH
 - MySQL Database
@@ -19,9 +19,9 @@ This project demonstrates the complete configuration and deployment of a secure 
 - OpenSSL
 
 ---
-## 📚 Lab Parts
+## Lab Parts
 
-### ✅ Part 1: Working with Encryption - COMPLETED
+### Part 1: Working with Encryption - COMPLETED
 
 **Date Completed:** 2025/10/01
 
@@ -63,10 +63,10 @@ gpg --output lab-secret.txt --decrypt lab-secret.txt.gpg
 ```
 
 #### Key Takeaways
-- 🔐 Encryption is the foundation of modern cybersecurity
-- 🔑 Public-key cryptography allows secure communication without sharing secrets
-- 🛡️ The same principles apply to SSH (Part 2) and HTTPS (Part 5)
-- 💡 Even viewing encrypted data can mess up your terminal - always use `reset` to fix it
+- Encryption is the foundation of modern cybersecurity
+- Public-key cryptography allows secure communication without sharing secrets
+- The same principles apply to SSH (Part 2) and HTTPS (Part 5)
+- Even viewing encrypted data can mess up your terminal - always use `reset` to fix it
 
 #### Challenges Faced
 - Terminal display corrupted when viewing binary encrypted file with `cat`
@@ -96,25 +96,25 @@ gpg --output lab-secret.txt --decrypt lab-secret.txt.gpg
 
 ---
 
-### 🔄 Part 2: SSH Configuration - IN PROGRESS
+### Part 2: SSH Configuration - IN PROGRESS
 
 Coming next: Configuring secure SSH access between client and server
 
 ---
 
-### 📊 Part 3: MySQL Database Setup - PENDING
+### Part 3: MySQL Database Setup - PENDING
 
 ---
 
-### 🌐 Part 4: Flask & PHP Integration - PENDING
+### Part 4: Flask & PHP Integration - PENDING
 
 ---
 
-### 🔒 Part 5: HTTPS with SSL/TLS - PENDING
+### Part 5: HTTPS with SSL/TLS - PENDING
 
 ---
 
-## 📈 Progress Tracker
+## Progress Tracker
 - [x] Part 1: Encryption Basics
 - [ ] Part 2: SSH Configuration
 - [ ] Part 3: MySQL Setup
@@ -122,7 +122,7 @@ Coming next: Configuring secure SSH access between client and server
 - [ ] Part 5: HTTPS Configuration
 
 ---
-## 💡 Key Learnings So Far
+## Key Learnings So Far
 
 ### Security Concepts
 - **Confidentiality:** Encryption ensures only authorized parties can read data
@@ -137,24 +137,24 @@ Coming next: Configuring secure SSH access between client and server
 
 ---
 
-## 🔗 Resources
+## Resources
 - [GNU Privacy Guard Documentation](https://gnupg.org/documentation/)
 - [OpenSSH Documentation](https://www.openssh.com/manual.html)
 - [Nginx Documentation](https://nginx.org/en/docs/)
 
 ---
 
-## 🤝 Connect With Me
+## Author Information
 - **LinkedIn:** [www.linkedin.com/in/tinyikotsamane]
 - **GitHub:** [https://github.com/ttsamanemashaba004]
 - **Email:** [ttsamane.mashaba@gmail.com]
 
 ---
 
-## 📜 License
+## License
 This project is for educational purposes as part of the EIOSY2A course.
 
 ---
 
 **Last Updated:** October 1, 2025  
-**Status:** Part 1 Complete ✅ | Part 2 In Progress 🔄
+**Status:** Part 1 Complete  | Part 2 In Progress 
