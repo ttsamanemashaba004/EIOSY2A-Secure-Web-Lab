@@ -214,7 +214,7 @@ sudo sshd -t
 ![SSH Config Secured](screenshots/part2/06-ssh-config-secured.jpg)
 *SSH configuration hardened with disabled root login and password authentication*
 
-![SSH Banner and Connection](screenshots/part2/07-ssh-banner-and-connection.jpg)
+![SSH Banner and Connection](screenshots/part2/07-ssh-banner.jpg)
 *Custom security banner displays on connection with system information*
 
 ![Password Auth Disabled](screenshots/part2/08-password-auth-disabled.jpg)
