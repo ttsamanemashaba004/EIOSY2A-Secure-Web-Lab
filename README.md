@@ -60,6 +60,7 @@ ls -l lab-secret.txt*
 
 # Decrypt file
 gpg --output lab-secret.txt --decrypt lab-secret.txt.gpg
+```
 
 #### Key Takeaways
 - 🔐 Encryption is the foundation of modern cybersecurity
