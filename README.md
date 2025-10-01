@@ -220,14 +220,186 @@ sudo sshd -t
 ![Password Auth Disabled](screenshots/part2/08-password-auth-disabled.jpg)
 *Password authentication properly disabled, only key-based auth allowed*
 
+
+
+
+
+
+### Part 3: MySQL Database Setup - COMPLETED
+
+**Date Completed:** October 2, 2025
+
+#### Objectives
+- Install and configure MySQL database server
+- Secure MySQL installation by removing default vulnerabilities
+- Create application database
+- Create database users with limited privileges
+- Test database connectivity and permissions
+
+#### What I Learned
+- **MySQL** is a relational database management system (RDBMS) used to store application data
+- **Database users** are service accounts that applications use to connect to MySQL (different from application users stored in tables)
+- **Principle of least privilege** - each application gets its own database user with minimal required permissions
+- Securing MySQL involves removing anonymous users, test databases, and remote root access
+- Database users should only have access to databases they need, not all databases
+- Proper user separation prevents one compromised application from affecting others
+
+#### Commands Used
+
+**MySQL Installation:**
+```bash
+# Install MySQL server
+sudo dnf install -y mysql-server
+
+# Enable MySQL to start on boot
+sudo systemctl enable mysqld
+
+# Start MySQL service
+sudo systemctl start mysqld
+
+# Verify service status
+systemctl status mysqld
+
+# Check MySQL is listening on port 3306
+sudo ss -tulpn | grep 3306
+```
+
+**MySQL Security Configuration:**
+```bash
+# Run security script to remove default vulnerabilities
+sudo mysql_secure_installation
+
+# Security steps performed:
+# - Set root password
+# - Remove anonymous users
+# - Disable remote root login
+# - Remove test database
+# - Reload privilege tables
+
+# Login to MySQL as root
+sudo mysql -u root -p
+```
+
+**Database and User Setup:**
+```sql
+-- Login to MySQL as root
+sudo mysql -u root -p
+
+-- Create the application database
+CREATE DATABASE labdb;
+
+-- Create Flask application database user
+CREATE USER 'flaskuser'@'localhost' IDENTIFIED BY 'flaskpass';
+
+-- Create PHP application database user
+CREATE USER 'phpuser'@'localhost' IDENTIFIED BY 'phppass';
+
+-- Grant Flask user access to labdb only
+GRANT ALL PRIVILEGES ON labdb.* TO 'flaskuser'@'localhost';
+
+-- Grant PHP user access to labdb only
+GRANT ALL PRIVILEGES ON labdb.* TO 'phpuser'@'localhost';
+
+-- Apply privilege changes
+FLUSH PRIVILEGES;
+
+-- Verify databases
+SHOW DATABASES;
+
+-- Verify users
+SELECT user, host FROM mysql.user;
+
+-- Switch to labdb
+USE labdb;
+```
+
+**Testing and Verification:**
+```sql
+-- Create test table
+CREATE TABLE test_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    message VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Insert test data
+INSERT INTO test_table (message) VALUES ('Hello from MySQL!');
+INSERT INTO test_table (message) VALUES ('Part 3 Database Setup');
+
+-- Query test data
+SELECT * FROM test_table;
+
+-- Show table structure
+DESCRIBE test_table;
+
+-- Exit MySQL
+EXIT;
+```
+
+**Test User Access:**
+```sql
+# Test Flask user can access database
+mysql -u flaskuser -p
+# Password: flaskpass
+
+# Inside MySQL prompt
+USE labdb;
+SELECT * FROM test_table;
+EXIT;
+
+```
+
+#### Key Takeaways
+- MySQL stores application data in tables within databases
+- Database users are service accounts for applications to connect, not end users of the application
+- Separate database users for each application improves security through isolation
+- Users should only have access to databases they need (principle of least privilege)
+- mysql_secure_installation removes common security vulnerabilities
+- Remote root login should be disabled to prevent unauthorized access
+- Test tables verify database functionality before deploying applications
+
+#### Challenges Faced
+- Understanding the difference between database users and application users
+- **Solution:** Database users authenticate applications to MySQL; application users are data stored in tables
+- **Learning:** Proper user management requires understanding both types of users and their different purposes
+
+#### Security Improvements Implemented
+- Root password set and protected
+- Anonymous users removed
+- Remote root login disabled
+- Test database removed
+- Separate users created for Flask and PHP applications
+- Users restricted to localhost access only
+- Limited privileges granted (access to labdb only)
+
+#### Screenshots
+
+![MySQL Service Running](screenshots/part3/01-mysql-service-running.jpg)
+*MySQL server successfully installed and running on openEuler*
+
+![MySQL Secured](screenshots/part3/02-mysql-secured.jpg)
+*Completed mysql_secure_installation with all security measures applied*
+
+![MySQL Login](screenshots/part3/03-mysql-login.jpg)
+*Successfully logged into MySQL as root user*
+
+![Database and Users](screenshots/part3/04-database-and-users.jpg)
+*Created labdb database and flaskuser/phpuser accounts*
+
+![Test Table Created](screenshots/part3/05-test-table-created.jpg)
+*Created test table with sample data to verify functionality*
+
+![Flask User Access](screenshots/part3/06-flaskuser-access.jpg)
+*Verified flaskuser can successfully access and query labdb*
+
+![MySQL Listening](screenshots/part3/07-mysql-listening.jpg)
+*Confirmed MySQL listening on port 3306*
+
 ---
 
 
 
 
-### Part 3: MySQL Database Setup - PENDING
-
----
 
 ### Part 4: Flask & PHP Integration - PENDING
 
@@ -240,7 +412,7 @@ sudo sshd -t
 ## Progress Tracker
 - [x] Part 1: Encryption Basics
 - [x] Part 2: SSH Configuration
-- [ ] Part 3: MySQL Setup
+- [x] Part 3: MySQL Setup
 - [ ] Part 4: Flask & PHP Integration
 - [ ] Part 5: HTTPS Configuration
 
@@ -279,5 +451,5 @@ This project is for educational purposes as part of the EIOSY2A course.
 
 ---
 
-**Last Updated:** October 2, 2025  
-**Status:** Parts 1-2 Complete | Part 3 In Progress
+**Last Updated:** October 1, 2025  
+**Status:** Parts 1-3 Complete | Part 3 In Progress
